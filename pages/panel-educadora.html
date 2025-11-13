@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel-educadora</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="contenido-total">
+        <!-- NAV -->
+        <nav class="nav-general">
+            <div class="logo-nav">
+                <img id="logo-img" src="../img/logo-sin-nombre.png" alt="logo">
+                <img id="logo-texto" src="../img/nombre-logo.png" alt="texto-logo">
+            </div>
+
+            <div class="perfil-nav">
+                <h3 class="nombre-educadora">Noelia</h3>
+                <!-- Este nombre se cambiará dinámicamente con JavaScript en función del usuario que haya hecho login -->
+                <a href="editar-perfil.html"> 
+                    <!-- En el futuro, este enlace abrirá un modal cuando se haga click en el avatar -->
+                    <img src="../img/avatar.png" alt="Avatar Educadora" class="avatar">
+                </a>
+            </div>
+        </nav>
+
+        <!-- Sección central -->
+        <section id="panel-educadora">
+           <!-- Saludo personalizado que también se actualizará dinámicamente con JavaScript -->
+            <h1 class="titulo-panel-edu">Hola, Noelia</h1>
+
+            <div id="contenedor-panel-edu">
+
+                <!-- Botón Mi Aula -->
+                <button class="boton-panel-edu" id="btn-aula">
+                    <img id="img-aula" src="../img/miAula.png" alt="Icono Mi Aula">
+                    <p>Mi Aula</p>
+                </button>
+
+                <!-- Botón Mensajes -->
+                <button class="boton-panel-edu" id="btn-chat">
+                    <img id="img-chat" src="../img/chat.png" alt="Icono Mensajes">
+                    <p>Mensajes</p>
+                </button>
+
+                <!-- Botón Turnos -->
+                <button class="boton-panel-edu" id="btn-turnos">
+                    <img id="img-turnos" src="../img/turnos.png" alt="Icono turnos">
+                    <p>Turnos</p>
+                </button>
+
+                <!-- Botón calendario -->
+                <button class="boton-panel-edu" id="btn-calendario">
+                    <img id="img-calendario" src="../img/calendar.png" alt="Icono Notificaciones">
+                    <p>Calendario</p>
+                </button>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 DailyKids · Plataforma educativa segura</p>
+    </footer>
+
+    <!-- MODAL EDICIÓN PERFIL: ventana emergente que se mostrará al hacer clic en el avatar -->
+    <!-- Está oculta por defecto con display: none y se mostrará con JavaScript -->
+    <div class="modal" id="modal-editar-perfil">
+        <div class="modal-contenido">
+            <h2>Editar Perfil</h2>
+
+            <!-- Vista previa del avatar actual -->
+            <div class="vista-avatar">
+                <img src="../img/avatar.png" alt="Avatar actual" id="preview-img">
+                <label for="cambiar-foto">Editar avatar</label>
+                <!-- Input tipo archivo: el usuario puede seleccionar una nueva imagen desde su PC o móvil -->
+                <!-- accept="image/*" limita el selector de archivos a solo imágenes (jpg, png, etc.) para evitar que se suban archivos no válidos -->
+                <input type="file" id="cambiar-foto" accept="image/*">
+            </div>
+
+            <!-- Formulario para actualizar email y contraseña -->
+            <form action="/procesa.php" method="POST" class="formulario-modal">
+                <input type="email" name="email" placeholder="Nuevo correo electrónico">
+                <input type="password" name="password" placeholder="Nueva contraseña">
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

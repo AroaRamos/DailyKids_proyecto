@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Aula</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  
+    <!-- NAV (puedes copiar el mismo que ya usas si lo necesitas) -->
+    <nav class="nav-general">
+        <div class="logo-nav">
+            <img id="logo-img" src="../img/logo-sin-nombre.png" alt="logo">
+            <img id="logo-texto" src="../img/nombre-logo.png" alt="texto-logo">
+        </div>
+
+        <div class="perfil-nav">
+            <h3 class="nombre-educadora">Noelia</h3>
+            <!-- Este nombre se cambiará dinámicamente con JavaScript en función del usuario que haya hecho login -->
+            <a href="editar-perfil.html"> 
+                <!-- En el futuro, este enlace abrirá un modal cuando se haga click en el avatar -->
+                <img src="../img/avatar.png" alt="Avatar Educadora" class="avatar">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Contenedor central -->
+    <section class="contenedor-aula">
+        <h1 class="titulo-aula">Mi Aula</h1>
+
+        <div class="contenedor-niños">
+            <!-- Niño 1 -->
+            <button class="tarjeta-niño" data-nombre="Luca">
+                <img src="../img/niño1.png" alt="Luca">
+                <p>Luca</p>
+            </button>
+
+            <!-- Niño 2 -->
+            <button class="tarjeta-niño" data-nombre="Vega">
+                <img src="../img/niño2.png" alt="Vega">
+                <p>Vega</p>
+            </button>
+
+            <!-- Niño 3 -->
+            <button class="tarjeta-niño" data-nombre="Jaime">
+                <img src="../img/niño7.png" alt="Jaime">
+                <p>Jaime</p>
+            </button>
+
+            <!-- Niño 4 -->
+            <button class="tarjeta-niño" data-nombre="Clhoe">
+                <img src="../img/niño4.png" alt="Clhoe">
+                <p>Clhoe</p>
+            </button>
+
+            <!-- Niño 5 -->
+            <button class="tarjeta-niño" data-nombre="Luis">
+                <img src="../img/niño10.png" alt="Luis">
+                <p>Luis</p>
+            </button>
+
+            <!-- Niño 6 -->
+            <button class="tarjeta-niño" data-nombre="Julia">
+                <img src="../img/niño6.png" alt="Julia">
+                <p>Julia</p>
+            </button>
+
+            <!-- Niño 7 -->
+            <button class="tarjeta-niño" data-nombre="Candela">
+                <img src="../img/niño3.png" alt="Candela">
+                <p>Candela</p>
+            </button>
+
+            <!-- Niño 8 -->
+            <button class="tarjeta-niño" data-nombre="Unai">
+                <img src="../img/niño8.png" alt="Unai">
+                <p>Unai</p>
+            </button>
+
+            <!-- Niño 9 -->
+            <button class="tarjeta-niño" data-nombre="Daniel">
+                <img src="../img/niño9.png" alt="Daniel">
+                <p>Daniel</p>
+            </button>
+
+            <!-- Niño 10 -->
+            <button class="tarjeta-niño" data-nombre="Julia">
+                <img src="../img/niño5.png" alt="Julia">
+                <p>Julia</p>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 DailyKids · Plataforma educativa segura</p>
+    </footer>
+
+    <!-- MODAL REGISTRO DIARIO -->
+    <div class="modal-registro" id="modal-registro-niño">
+      <div class="modal-contenido-registro">
+        <!-- Botón de cierre -->
+        <button class="cerrar-modal">✖</button>
+        <div class="banner-modal">
+          <img src="../img/lapiz.png" alt="" id="img-registro">
+          <h2 id="texto-registro">Registro diario</h2>
+        </div>
+
+        <div class="avatar-niño">
+          <img src="../img/niño1.png" alt="Foto del niño">
+          <h3>Hugo Fernández</h3>
+        </div>
+
+        <form class="formulario-diario">
+          <div id="bloque-columnas">
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="columna-izquierda">
+              <div class="columna-contenido">
+                <fieldset>
+                  <legend>Información general</legend>
+
+                  <label for="asistencia">Asistencia:</label>
+                  <select name="asistencia" id="asistencia">
+                    <option value="presente" selected>Presente</option>
+                    <option value="ausente">Ausente</option>
+                  </select>
+
+                  <label for="sueño">Sueño (minutos):</label>
+                  <input type="number" name="sueño" id="sueño" min="0" max="300" value="0">
+
+                  <label for="depos">Cacas:</label>
+                  <input type="number" name="deposiciones" id="depos" min="0" max="10" value="0">
+
+                  <div class="material-checks">
+                    <label><input type="checkbox" name="toallitas"> Toallitas</label>
+                    <label><input type="checkbox" name="pañales"> Pañales</label>
+                    <label><input type="checkbox" name="ropa-cambio"> Ropa de cambio</label>
+                  </div>
+                </fieldset>
+
+                <!-- Observaciones debajo -->
+                <div class="bloque-observaciones">
+                  <label for="observaciones">Observaciones:</label>
+                  <textarea name="observaciones" id="observaciones" rows="5"></textarea>
+                </div>
+              </div>
+            </div>  
+            <!-- COLUMNA DERECHA -->
+            <div class="columna-derecha">
+              <div class="columna-contenido">
+                <fieldset>
+                  <legend>Alimentación</legend>
+
+                  <label for="menu">Menú semanal:</label>
+                  <select name="menu" id="menu">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="1">Menú 1</option>
+                    <option value="2">Menú 2</option>
+                    <option value="3">Menú 3</option>
+                    <option value="4">Menú 4</option>
+                  </select>
+
+                  <label for="desayuno">Desayuno:</label>
+                  <select name="desayuno" id="desayuno">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="mb">Muy bien</option>
+                    <option value="b">Bien</option>
+                    <option value="r">Regular</option>
+                    <option value="m">Mal</option>
+                  </select>
+
+                  <label for="primero">Comida - Primero:</label>
+                  <select name="primero" id="primero">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="mb">Muy bien</option>
+                    <option value="b">Bien</option>
+                    <option value="r">Regular</option>
+                    <option value="m">Mal</option>
+                  </select>
+
+                  <label for="segundo">Comida - Segundo:</label>
+                  <select name="segundo" id="segundo">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="mb">Muy bien</option>
+                    <option value="b">Bien</option>
+                    <option value="r">Regular</option>
+                    <option value="m">Mal</option>
+                  </select>
+
+                  <label for="postre">Comida - Postre:</label>
+                  <select name="postre" id="postre">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="mb">Muy bien</option>
+                    <option value="b">Bien</option>
+                    <option value="r">Regular</option>
+                    <option value="m">Mal</option>
+                  </select>
+                </fieldset>
+
+                <!-- Botones debajo -->
+                <div class="botones-modal icon-text">
+                  <button type="button" class="btn-guardar">
+                    <img src="../img/guardar.png" alt="Guardar" class="icono-btn">
+                    <span>Guardar</span>
+                  </button>
+
+                  <button type="button" class="btn-enviar">
+                    <img src="../img/enviar.png" alt="Enviar" class="icono-btn">
+                    <span>Enviar</span>
+                  </button>
+
+                  <button type="button" class="btn-evaluacion">
+                    <img src="../img/evaluacion.png" alt="Evaluación" class="icono-btn">
+                    <span>Evaluación</span>
+                  </button>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL EVALUACIÓN TRIMESTRAL -->
+    <div class="modal-evaluacion" id="modal-evaluacion">
+      <div class="modal-contenido-evaluacion">
+
+        <button class="cerrar-modal">✖</button>
+        <h2><img src="../img/icono-lapiz.png" alt="Lápiz"> Informe Trimestral</h2>
+
+        <form class="formulario-evaluacion">
+          <div class="info-evaluacion">
+            <div>
+              <label for="trimestre">Trimestre:</label>
+              <select id="trimestre" name="trimestre">
+                <option value="" disabled selected>Selecciona  un trimestre</option>
+                <option value="1">1º Trimestre</option>
+                <option value="2">2º Trimestre</option>
+                <option value="3">3º Trimestre</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Edad del aula:</label>
+              <input type="text" value="2-3 años" disabled>
+            </div>
+
+            <div>
+              <label>Alumno/a:</label>
+              <input type="text" value="Hugo Fernández" disabled>
+            </div>
+          </div>
+          
+            <!-- Tablas de evaluación -->
+            <div class="fila-tablas">
+            <!-- Crecimiento en armonía -->
+            <div class="bloque-tabla tabla-amarilla">
+              <h3>Crecimiento en armonía</h3>
+              <table>
+                <tr>
+                  <td>Domina diferentes movimientos</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Comunica necesidades básicas</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Participa en la limpieza del propio cuerpo</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Colabora al vestirse</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Independencia en la alimentación</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Estampa con mano/dedo</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Pega pegatinas</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Comparte juguetes</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Identifica emociones básicas</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+                <tr>
+                  <td>Acepta casi todos los alimentos</td>
+                  <td><select><option value="C">C</option><option value="EP">E.P.</option><option value="NI">N.I.</option></select></td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Exploración del entorno -->
+            <div class="bloque-tabla tabla-verde">
+              <h3>Exploración del entorno</h3>
+              <table>
+                <tr>
+                  <td>Explora objetos brevemente</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mete y saca objetos de un recipiente</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reconoce a la familia</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reconoce insectos</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reconoce al menos 3 animales</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Imita tareas domésticas</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Manipula elementos naturales</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ayuda a recoger</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Clasifica objetos con ayuda</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+
+            <!-- Comunicación y representación -->
+            <div class="bloque-tabla tabla-rosa">
+              <h3>Comunicación y representación</h3>
+              <table>
+                <tr>
+                  <td>Expresa deseos con palabras o gestos</td>
+                  <td>
+                    <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pronuncia algunas palabras</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mejora pronunciación</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Aumenta atención en la asamblea</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Disfruta cuentos breves</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ojea cuentos</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hace música con objetos</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reproduce coreografía sencilla</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Señala entre dos colores</td>
+                  <td>
+                     <select>
+                      <option value="C">C</option>
+                      <option value="EP">E.P.</option>
+                      <option value="NI">N.I.</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Leyenda -->
+          <div class="leyenda-evaluacion">
+            <p><b>Leyenda:</b> C = Conseguido, E.P. = En proceso, N.I. = No iniciado</p>
+          </div>
+
+          <!-- Observaciones y firma -->
+          <div class="extra-evaluacion">
+            <div class="lado-izquierdo">
+              <label for="observaciones">Observaciones</label>
+              <textarea id="observaciones"></textarea>
+
+              <label for="firma">Firma</label>
+              <input id="firma" type="text" />
+            </div>
+
+            <div class="contenedor-botones">
+              <button class="btn-guardar">
+                <img src="icono-guardar.svg" class="icono-btn" />
+                Guardar
+              </button>
+              <button class="btn-enviar">
+                <img src="icono-enviar.svg" class="icono-btn" />
+                Enviar
+              </button>
+            </div>
+          </div>
+
+
+</body>
+</html>
