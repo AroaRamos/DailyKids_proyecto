@@ -408,7 +408,7 @@ body.pag-login {
 
 /* ------ Inicio Modal "Registro diario" ------*/
 .modal-registro {
-  display: none;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
