@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MER DailyKids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            color: #718096;
+        }
+        
+        .diagram {
+            position: relative;
+            width: 100%;
+            height: 1000px;
+        }
+        
+        /* Entidades */
+        .entity {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 200px;
+            transition: transform 0.2s ease;
+        }
+        
+        .entity:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .entity-header {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px 8px 0 0;
+            color: white;
+            text-align: center;
+            margin: -20px -20px 15px -20px;
+        }
+        
+        .attribute {
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #4a5568;
+            border-left: 3px solid #e2e8f0;
+            margin: 5px 0;
+        }
+        
+        .pk {
+            border-left-color: #f59e0b;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+        
+        .fk {
+            border-left-color: #8b5cf6;
+            font-style: italic;
+            color: #8b5cf6;
+        }
+        
+        /* Colores por entidad */
+        .usuario-color { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .educadora-color { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .familia-color { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .aula-color { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .alumno-color { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .registro-color { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .mensaje-color { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        
+        /* Posicionamiento */
+        #usuario { top: 50px; left: 50%; transform: translateX(-50%); }
+        #educadora { top: 50px; left: 100px; }
+        #familia { top: 50px; right: 100px; }
+        #aula { top: 350px; left: 150px; }
+        #alumno { top: 350px; left: 50%; transform: translateX(-50%); }
+        #registro { top: 650px; left: 50%; transform: translateX(-50%); }
+        #mensaje { top: 650px; right: 150px; }
+        
+        /* Relaciones (líneas) */
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .entity {
+            z-index: 1;
+        }
+        
+        .relation-label {
+            position: absolute;
+            background: #fef3c7;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400e;
+            border: 2px solid #fbbf24;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        /* Leyenda */
+        .legend {
+            margin-top: 40px;
+            padding: 25px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .legend h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin: 8px 20px 8px 0;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s ease;
+        }
+        
+        .print-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Modelo Entidad-Relación</h1>
+            <p>Sistema de Gestión para Escuelas Infantiles - DailyKids</p>
+        </div>
+        
+        <div class="diagram">
+            <!-- SVG para las líneas de relación -->
+            <svg>
+                <!-- Usuario -> Educadora (1:1) -->
+                <line x1="300" y1="180" x2="250" y2="250" stroke="#667eea" stroke-width="3"/>
+                <circle cx="300" cy="180" r="5" fill="#667eea"/>
+                <circle cx="250" cy="250" r="5" fill="#f5576c"/>
+                
+                <!-- Usuario -> Familia (1:1) -->
+                <line x1="800" y1="180" x2="900" y2="250" stroke="#667eea" stroke-width="3"/>
+                <circle cx="800" cy="180" r="5" fill="#667eea"/>
+                <circle cx="900" cy="250" r="5" fill="#00f2fe"/>
+                
+                <!-- Educadora -> Aula (1:N titular) -->
+                <line x1="250" y1="280" x2="280" y2="380" stroke="#f5576c" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Familia -> Alumno (1:N) -->
+                <line x1="900" y1="280" x2="700" y2="400" stroke="#00f2fe" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Aula -> Alumno (1:N) -->
+                <line x1="350" y1="450" x2="500" y2="450" stroke="#38f9d7" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Alumno -> RegistroDiario (1:N) -->
+                <line x1="600" y1="520" x2="600" y2="650" stroke="#fee140" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Usuario -> Mensaje (remitente/destinatario) -->
+                <line x1="700" y1="150" x2="1000" y2="700" stroke="#667eea" stroke-width="2" stroke-dasharray="3,3"/>
+            </svg>
+            
+            <!-- Entidad USUARIO -->
+            <div class="entity" id="usuario">
+                <div class="entity-header usuario-color">USUARIO</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute">email (UNIQUE)</div>
+                <div class="attribute">password</div>
+                <div class="attribute">tipo_usuario</div>
+                <div class="attribute">is_active</div>
+                <div class="attribute">created_at</div>
+            </div>
+            
+            <!-- Entidad EDUCADORA -->
+            <div class="entity" id="educadora">
+                <div class="entity-header educadora-color">EDUCADORA</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute fk">🔗 id_usuario (FK 1:1)</div>
+                <div class="attribute">nombre</div>
+                <div class="attribute">apellidos</div>
+                <div class="attribute">telefono</div>
+                <div class="attribute">foto</div>
+            </div>
+            
+            <!-- Entidad FAMILIA -->
+            <div class="entity" id="familia">
+                <div class="entity-header familia-color">FAMILIA</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute fk">🔗 id_usuario (FK 1:1)</div>
+                <div class="attribute">nombre_contacto</div>
+                <div class="attribute">telefono</div>
+                <div class="attribute">email</div>
+                <div class="attribute">direccion</div>
+            </div>
+            
+            <!-- Entidad AULA -->
+            <div class="entity" id="aula">
+                <div class="entity-header aula-color">AULA</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute">nombre</div>
+                <div class="attribute">tipo_aula</div>
+                <div class="attribute fk">🔗 id_educadora_titular (FK)</div>
+                <div class="attribute">capacidad_maxima</div>
+                <div class="attribute">curso_escolar</div>
+            </div>
+            
+            <!-- Entidad ALUMNO -->
+            <div class="entity" id="alumno">
+                <div class="entity-header alumno-color">ALUMNO</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute">nombre</div>
+                <div class="attribute">apellidos</div>
+                <div class="attribute">fecha_nacimiento</div>
+                <div class="attribute">sexo</div>
+                <div class="attribute">foto</div>
+                <div class="attribute fk">🔗 id_familia (FK)</div>
+                <div class="attribute fk">🔗 id_aula (FK)</div>
+                <div class="attribute">activo</div>
+            </div>
+            
+            <!-- Entidad REGISTRO DIARIO -->
+            <div class="entity" id="registro">
+                <div class="entity-header registro-color">REGISTRO DIARIO</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute fk">🔗 id_alumno (FK)</div>
+                <div class="attribute fk">🔗 id_educadora (FK)</div>
+                <div class="attribute">fecha (UNIQUE con alumno)</div>
+                <div class="attribute">asistencia</div>
+                <div class="attribute">desayuno, platos, postre</div>
+                <div class="attribute">sueño_minutos</div>
+                <div class="attribute">num_deposiciones</div>
+                <div class="attribute">necesita_toallitas</div>
+                <div class="attribute">necesita_pañales</div>
+                <div class="attribute">observaciones</div>
+            </div>
+            
+            <!-- Entidad MENSAJE -->
+            <div class="entity" id="mensaje">
+                <div class="entity-header mensaje-color">MENSAJE</div>
+                <div class="attribute pk">🔑 id (PK)</div>
+                <div class="attribute fk">🔗 id_remitente (FK)</div>
+                <div class="attribute fk">🔗 id_destinatario (FK)</div>
+                <div class="attribute">asunto</div>
+                <div class="attribute">contenido</div>
+                <div class="attribute">leido</div>
+                <div class="attribute">fecha_envio</div>
+                <div class="attribute">fecha_lectura</div>
+            </div>
+            
+            <!-- Etiquetas de relaciones -->
+            <div class="relation-label" style="top: 130px; left: 250px;">1:1</div>
+            <div class="relation-label" style="top: 130px; right: 250px;">1:1</div>
+            <div class="relation-label" style="top: 320px; left: 220px;">1:N (titular)</div>
+            <div class="relation-label" style="top: 320px; right: 250px;">1:N (hijos)</div>
+            <div class="relation-label" style="top: 420px; left: 380px;">1:N</div>
+            <div class="relation-label" style="top: 570px; left: 48%; transform: translateX(-50%);">1:N (registros)</div>
+        </div>
+        
+        <!-- Leyenda -->
+        <div class="legend">
+            <h3>📌 Leyenda</h3>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #f59e0b;"></span>
+                <strong>PK</strong> = Primary Key (Clave Primaria)
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #8b5cf6;"></span>
+                <strong>FK</strong> = Foreign Key (Clave Foránea)
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #667eea;"></span>
+                <strong>Línea continua</strong> = Relación 1:1
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #667eea; opacity: 0.5;"></span>
+                <strong>Línea discontinua</strong> = Relación 1:N (uno a muchos)
+            </div>
+            <br><br>
+            <p style="color: #4a5568; font-size: 14px; margin-top: 10px;">
+                <strong>Restricciones importantes:</strong><br>
+                • Un registro diario es ÚNICO por alumno y fecha (no puede haber duplicados)<br>
+                • Un usuario solo puede ser educadora O familia (tipo_usuario define el rol)<br>
+                • Cada aula tiene una educadora titular asignada
+            </p>
+        </div>
+    </div>
+    
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+</body>
+</html>
